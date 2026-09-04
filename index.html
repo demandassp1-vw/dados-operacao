@@ -6,18 +6,18 @@
 <title>Ficha de Proposta</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:   #ECE7DA;
-    --card:    #FAF7EF;
-    --ink:     #201D18;
-    --ink-soft:#5B564A;
-    --hair:    #CBC3AE;
-    --ledger:  #1F6F4A;
-    --ledger-soft: #E4EEE7;
-    --rust:    #A84A2A;
-    --rust-soft: #F3E6DE;
+    --paper:   #F2F3F5;
+    --card:    #FFFFFF;
+    --ink:     #0E2A47;
+    --ink-soft:#6B7280;
+    --hair:    #D9DCE1;
+    --ledger:  #2E9E63;
+    --ledger-soft: #E7F5EC;
+    --rust:    #17436B;
+    --rust-soft: #E9EFF5;
   }
 
   *{ box-sizing: border-box; }
@@ -26,10 +26,10 @@
     margin:0;
     background: var(--paper);
     background-image:
-      radial-gradient(circle at 1px 1px, rgba(32,29,24,0.055) 1px, transparent 0);
+      radial-gradient(circle at 1px 1px, rgba(14,42,71,0.06) 1px, transparent 0);
     background-size: 22px 22px;
     color: var(--ink);
-    font-family: 'Fraunces', serif;
+    font-family: 'Poppins', sans-serif;
     min-height: 100vh;
   }
 
@@ -58,7 +58,7 @@
   }
 
   header.page-head span{
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 12px;
     color: var(--ink-soft);
     letter-spacing: 0.02em;
@@ -90,7 +90,7 @@
   }
 
   .intake p{
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 12px;
     line-height: 1.6;
     color: var(--ink-soft);
@@ -104,7 +104,7 @@
     background: #fff;
     border: 1px solid var(--hair);
     padding: 12px;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 12px;
     line-height: 1.55;
     color: var(--ink);
@@ -122,7 +122,7 @@
   }
 
   button{
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 12px;
     letter-spacing: 0.01em;
     border: 1px solid var(--ink);
@@ -141,7 +141,7 @@
 
   .status-line{
     margin-top: 10px;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 11px;
     color: var(--rust);
     min-height: 14px;
@@ -164,14 +164,14 @@
   }
 
   .slip-top .proposta-num{
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 12px;
     color: var(--ink-soft);
   }
 
   .slip-top .proposta-num b{
     display:block;
-    font-family: 'Fraunces', serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 22px;
     font-weight: 600;
     color: var(--ink);
@@ -179,7 +179,7 @@
   }
 
   .stamp{
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -197,7 +197,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 14px;
     padding: 0 26px 20px;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
   }
 
   .meta-row .field label,
@@ -213,6 +213,7 @@
   .meta-row .field div{
     font-size: 13px;
     color: var(--ink);
+    font-variant-numeric: tabular-nums;
   }
 
   .tear{
@@ -238,7 +239,7 @@
     margin-bottom: 22px;
   }
   .name-row div{
-    font-family: 'Fraunces', serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 21px;
     font-weight: 500;
   }
@@ -251,9 +252,10 @@
   }
 
   .figures .field .value{
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 17px;
-    font-weight: 500;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
   }
 
   .figures .field.credito .value{
@@ -280,12 +282,12 @@
     margin-bottom: 22px;
   }
   .parcela-line .value{
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 24px;
     font-weight: 600;
   }
   .parcela-line .label{
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 11px;
     color: var(--ink-soft);
     text-transform: uppercase;
@@ -302,7 +304,7 @@
 
   .extra-fields .field label{
     display:block;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -315,7 +317,7 @@
     border: none;
     border-bottom: 1px solid var(--hair);
     background: transparent;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 13px;
     color: var(--ink);
     padding: 4px 2px;
@@ -336,14 +338,14 @@
     padding: 60px 26px;
     text-align: center;
     color: var(--ink-soft);
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', sans-serif;
     font-size: 12px;
     line-height: 1.7;
   }
 
   .empty-state b{
     display:block;
-    font-family: 'Fraunces', serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 18px;
     color: var(--ink);
     font-weight: 600;
@@ -364,30 +366,7 @@
 
     <div class="intake">
       <h2>Colar dados</h2>
-      <p>Cole aqui o texto exportado do sistema e aperte Enter (ou clique em Gerar). Os campos são reconhecidos pelo nome, na ordem em que aparecerem.</p>
-      <textarea id="raw" placeholder="Proposta
-15487759
-
-Data Inclusão
-04/09/2026
-
-CPF
-328.178.618-92
-
-Nome
-OSVALDO SOARES DE SOUZA
-
-Status da Proposta
-Aprovada
-
-Valor Veículo
-R$ 112.900,00
-
-Valor Entrada
-R$ 26.900,00
-
-60x
-R$ 3.005,33"></textarea>
+      <textarea id="raw" placeholder="Cole aqui os dados..."></textarea>
       <div class="intake-actions">
         <button id="gerar">Gerar ficha</button>
         <button id="limpar" class="secondary">Limpar</button>
@@ -436,6 +415,22 @@ R$ 3.005,33"></textarea>
       if (known && i + 1 < lines.length){
         data[known.key] = lines[i + 1];
         i++;
+
+        // Logo depois do status, o sistema costuma trazer a descrição
+        // do veículo e o ano/modelo, sem rótulo próprio.
+        if (known.key === 'status'){
+          const next = lines[i + 1];
+          if (next && !LABELS.some(l => l.re.test(next)) && !/^dados\s*da\s*opera/i.test(next)){
+            data.veiculoDescricao = next;
+            i++;
+
+            const next2 = lines[i + 1];
+            if (next2 && /^\d{4}\s*\/\s*\d{4}$/.test(next2)){
+              data.anoModelo = next2;
+              i++;
+            }
+          }
+        }
         continue;
       }
 
@@ -482,6 +477,11 @@ R$ 3.005,33"></textarea>
     const parcelaQtd = data.parcelaQtd || '—';
     const parcelaValor = data.parcelaValor ? formatCurrency(parseCurrency(data.parcelaValor)) : '—';
 
+    const veiculoDescricao = data.veiculoDescricao || '—';
+    const anoModelo = data.anoModelo || '—';
+
+    const retornoAuto = data.codigoPlano ? data.codigoPlano.trim().slice(-1) : '';
+
     const aprovada = /aprova/i.test(status);
     const stampClass = aprovada ? '' : 'pendente';
     const stampText = status.toUpperCase();
@@ -514,8 +514,14 @@ R$ 3.005,33"></textarea>
 
       <div class="field-block">
         <div class="name-row">
-          <label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);margin-bottom:4px;">Nome</label>
+          <label style="display:block;font-family:'Poppins',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);margin-bottom:4px;">Nome</label>
           <div>${escapeHtml(nome)}</div>
+        </div>
+
+        <div class="name-row">
+          <label style="display:block;font-family:'Poppins',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);margin-bottom:4px;">Veículo</label>
+          <div style="font-size:15px;">${escapeHtml(veiculoDescricao)}</div>
+          <div style="font-size:12px;color:var(--ink-soft);margin-top:2px;font-variant-numeric:tabular-nums;">Ano/modelo: ${escapeHtml(anoModelo)}</div>
         </div>
 
         <div class="figures">
@@ -541,7 +547,7 @@ R$ 3.005,33"></textarea>
         <div class="extra-fields">
           <div class="field">
             <label>Retorno</label>
-            <input type="text" id="fRetorno" placeholder="05">
+            <input type="text" id="fRetorno" value="${escapeHtml(retornoAuto)}">
           </div>
           <div class="field">
             <label>Vencimento</label>
