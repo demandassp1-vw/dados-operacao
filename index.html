@@ -1,4 +1,604 @@
-<!<!DOCTYPE html>
+<!<!<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha de Proposta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:   #F2F3F5;
+    --card:    #FFFFFF;
+    --ink:     #0E2A47;
+    --ink-soft:#6B7280;
+    --hair:    #D9DCE1;
+    --ledger:  #2E9E63;
+    --ledger-soft: #E7F5EC;
+    --rust:    #17436B;
+    --rust-soft: #E9EFF5;
+    --flag-green: #009C3B;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(14,42,71,0.06) 1px, transparent 0);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+  }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  header.page-head{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 18px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  header.page-head h1{
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+    font-optical-sizing: auto;
+  }
+
+  header.page-head span{
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+
+  .grid{
+    display: grid;
+    grid-template-columns: minmax(280px, 380px) 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  @media (max-width: 820px){
+    .grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Intake panel ---------- */
+
+  .intake{
+    background: var(--card);
+    border: 1px solid var(--hair);
+    padding: 22px;
+  }
+
+  .intake h2{
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  .intake p{
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+  }
+
+  textarea{
+    width: 100%;
+    min-height: 120px;
+    resize: vertical;
+    background: #fff;
+    border: 1px solid var(--hair);
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  textarea:focus{
+    outline: none;
+    border-color: var(--ink);
+  }
+
+  .intake-actions{
+    display:flex;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  button{
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--card);
+    padding: 10px 16px;
+    cursor: pointer;
+  }
+
+  button.secondary{
+    background: transparent;
+    color: var(--ink);
+  }
+
+  button:active{ transform: translateY(1px); }
+
+  .status-line{
+    margin-top: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    color: var(--rust);
+    min-height: 14px;
+  }
+
+  /* ---------- Output slip ---------- */
+
+  .slip{
+    background: var(--card);
+    border: 1px solid var(--hair);
+    position: relative;
+  }
+
+  .slip-top{
+    padding: 17px 18px 14px;
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .slip-top .proposta-num{
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    color: var(--ink-soft);
+  }
+
+  .slip-top .proposta-num b{
+    display:block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 2px;
+  }
+
+  .stamp{
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    background: var(--flag-green);
+    color: #fff;
+    border-radius: 3px;
+    transform: rotate(-8deg);
+    white-space: nowrap;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.18);
+  }
+
+  .stamp.pendente{ background: var(--rust); }
+
+  .meta-row{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 0 18px 14px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .meta-row .field label,
+  .field-block .field label{
+    display:block;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin-bottom: 3px;
+  }
+
+  .meta-row .field div{
+    font-size: 10px;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tear{
+    border-top: 2px dashed var(--hair);
+    position: relative;
+  }
+  .tear::before, .tear::after{
+    content:"";
+    position:absolute;
+    top:-9px;
+    width:18px; height:18px;
+    background: var(--paper);
+    border-radius: 50%;
+  }
+  .tear::before{ left:-9px; }
+  .tear::after{ right:-9px; }
+
+  .field-block{
+    padding: 17px 18px;
+  }
+
+  .name-row{
+    margin-bottom: 15px;
+  }
+  .name-row div{
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .figures{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 13px;
+    margin-bottom: 15px;
+  }
+
+  .figures .field .value{
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .figures .field.credito .value{
+    color: var(--ledger);
+  }
+  .figures .field.credito{
+    background: var(--ledger-soft);
+    padding: 8px 10px;
+    margin: -8px -10px -8px 0;
+  }
+
+  .parcela-line{
+    border-top: 1px solid var(--hair);
+    padding-top: 13px;
+    padding-bottom: 15px;
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .parcela-main{
+    display:flex;
+    align-items: baseline;
+    gap: 7px;
+  }
+  .parcela-line .value{
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .parcela-line .label{
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .parcela-line .field{
+    display:flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .parcela-line .field label{
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .parcela-line .field input{
+    width: 64px;
+    border: none;
+    border-bottom: 1px solid var(--hair);
+    background: transparent;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    color: var(--ink);
+    padding: 2px 2px;
+  }
+  .parcela-line .field input:focus{
+    outline: none;
+    border-bottom-color: var(--ink);
+  }
+
+  .empty-state{
+    padding: 42px 18px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px;
+    line-height: 1.7;
+  }
+
+  .empty-state b{
+    display:block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="page-head">
+    <h1>Ficha de Proposta</h1>
+    <span>cole os dados &rarr; enter &rarr; a ficha se monta sozinha</span>
+  </header>
+
+  <div class="grid">
+
+    <div class="intake">
+      <h2>Colar dados</h2>
+      <textarea id="raw" placeholder="Cole aqui os dados..."></textarea>
+      <div class="intake-actions">
+        <button id="gerar">Gerar ficha</button>
+        <button id="limpar" class="secondary">Limpar</button>
+      </div>
+      <div class="status-line" id="statusLine"></div>
+    </div>
+
+    <div class="slip" id="slip">
+      <div class="empty-state">
+        <b>Nenhuma proposta ainda</b>
+        Cole os dados ao lado para montar a ficha.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  const raw = document.getElementById('raw');
+  const slip = document.getElementById('slip');
+  const statusLine = document.getElementById('statusLine');
+  const gerarBtn = document.getElementById('gerar');
+  const limparBtn = document.getElementById('limpar');
+
+  const LABELS = [
+    { key: 'proposta',      re: /^p?roposta$/i },
+    { key: 'dataInclusao',  re: /^data\s*inclus[aã]o$/i },
+    { key: 'cpf',           re: /^cpf$/i },
+    { key: 'nome',          re: /^nome$/i },
+    { key: 'status',        re: /^status\s*da\s*proposta$/i },
+    { key: 'codigoPlano',   re: /^c[oó]digo\s*plano$/i },
+    { key: 'vctoPlano',     re: /^vcto\.?\s*do\s*plano$/i },
+    { key: 'valorVeiculo',  re: /^valor\s*ve[ií]culo$/i },
+    { key: 'valorEntrada',  re: /^valor\s*entrada$/i },
+  ];
+
+  function parse(text){
+    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+    const data = {};
+
+    for (let i = 0; i < lines.length; i++){
+      const line = lines[i];
+
+      const known = LABELS.find(l => l.re.test(line));
+      if (known && i + 1 < lines.length){
+        data[known.key] = lines[i + 1];
+        i++;
+
+        // Logo depois do status, o sistema costuma trazer a descrição
+        // do veículo e o ano/modelo, sem rótulo próprio.
+        if (known.key === 'status'){
+          const next = lines[i + 1];
+          if (next && !LABELS.some(l => l.re.test(next)) && !/^dados\s*da\s*opera/i.test(next)){
+            data.veiculoDescricao = next;
+            i++;
+
+            const next2 = lines[i + 1];
+            if (next2 && /^\d{4}\s*\/\s*\d{4}$/.test(next2)){
+              data.anoModelo = next2;
+              i++;
+            }
+          }
+        }
+        continue;
+      }
+
+      const parcelaMatch = line.match(/^(\d+)\s*x$/i);
+      if (parcelaMatch && i + 1 < lines.length){
+        data.parcelaQtd = parcelaMatch[1];
+        data.parcelaValor = lines[i + 1];
+        i++;
+        continue;
+      }
+    }
+    return data;
+  }
+
+  function parseCurrency(str){
+    if (!str) return NaN;
+    const cleaned = str.replace(/[^\d,.-]/g, '').replace(/\./g, '').replace(',', '.');
+    return parseFloat(cleaned);
+  }
+
+  function formatCurrency(num){
+    if (isNaN(num)) return '—';
+    return 'R$ ' + num.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function escapeHtml(str){
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function render(data){
+    const nome = data.nome || '—';
+    const proposta = data.proposta || '—';
+    const dataInclusao = data.dataInclusao || '—';
+    const cpf = data.cpf || '—';
+    const status = data.status || '—';
+
+    const valorVeiculoNum = parseCurrency(data.valorVeiculo);
+    const valorEntradaNum = parseCurrency(data.valorEntrada);
+    const credito = (!isNaN(valorVeiculoNum) && !isNaN(valorEntradaNum))
+      ? valorVeiculoNum - valorEntradaNum
+      : NaN;
+
+    const parcelaQtd = data.parcelaQtd || '—';
+    const parcelaValor = data.parcelaValor ? formatCurrency(parseCurrency(data.parcelaValor)) : '—';
+
+    const veiculoDescricao = data.veiculoDescricao || '—';
+    const anoModelo = data.anoModelo || '—';
+
+    const retornoAuto = data.codigoPlano ? data.codigoPlano.trim().slice(-1) : '';
+
+    const aprovada = /aprova/i.test(status);
+    const stampClass = aprovada ? '' : 'pendente';
+    const stampText = status.toUpperCase();
+
+    slip.innerHTML = `
+      <div class="slip-top">
+        <div class="proposta-num">
+          Proposta nº
+          <b>${escapeHtml(proposta)}</b>
+        </div>
+        <div class="stamp ${stampClass}">${escapeHtml(stampText)}</div>
+      </div>
+
+      <div class="meta-row">
+        <div class="field">
+          <label>Data inclusão</label>
+          <div>${escapeHtml(dataInclusao)}</div>
+        </div>
+        <div class="field">
+          <label>CPF</label>
+          <div>${escapeHtml(cpf)}</div>
+        </div>
+        <div class="field">
+          <label>Vencimento do plano</label>
+          <div>${escapeHtml(data.vctoPlano || '—')}</div>
+        </div>
+      </div>
+
+      <div class="tear"></div>
+
+      <div class="field-block">
+        <div class="name-row">
+          <label style="display:block;font-family:'Poppins',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);margin-bottom:4px;">Nome</label>
+          <div>${escapeHtml(nome)}</div>
+        </div>
+
+        <div class="name-row">
+          <label style="display:block;font-family:'Poppins',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);margin-bottom:4px;">Veículo</label>
+          <div style="font-size:15px;">${escapeHtml(veiculoDescricao)}</div>
+          <div style="font-size:12px;color:var(--ink-soft);margin-top:2px;font-variant-numeric:tabular-nums;">Ano/modelo: ${escapeHtml(anoModelo)}</div>
+        </div>
+
+        <div class="figures">
+          <div class="field">
+            <label>Valor carro</label>
+            <div class="value">${formatCurrency(valorVeiculoNum)}</div>
+          </div>
+          <div class="field">
+            <label>Entrada</label>
+            <div class="value">${formatCurrency(valorEntradaNum)}</div>
+          </div>
+          <div class="field credito">
+            <label>Crédito</label>
+            <div class="value">${formatCurrency(credito)}</div>
+          </div>
+        </div>
+
+        <div class="parcela-line">
+          <div class="parcela-main">
+            <div class="value">${escapeHtml(parcelaQtd)}x</div>
+            <div class="label">de ${parcelaValor}</div>
+          </div>
+          <div class="field">
+            <label>Retorno</label>
+            <input type="text" id="fRetorno" value="${escapeHtml(retornoAuto)}">
+          </div>
+          <div class="field">
+            <label>Vencimento</label>
+            <input type="text" id="fVencimento" placeholder="30 dias">
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function gerar(){
+    const text = raw.value.trim();
+    if (!text){
+      statusLine.textContent = 'Cole os dados antes de gerar.';
+      statusLine.style.color = 'var(--rust)';
+      return;
+    }
+    const data = parse(text);
+    if (!data.nome && !data.proposta && !data.valorVeiculo){
+      statusLine.textContent = 'Não reconheci os campos. Confira se o texto colado segue o formato esperado.';
+      statusLine.style.color = 'var(--rust)';
+      return;
+    }
+    statusLine.textContent = '';
+    render(data);
+  }
+
+  gerarBtn.addEventListener('click', gerar);
+
+  limparBtn.addEventListener('click', function(){
+    raw.value = '';
+    statusLine.textContent = '';
+    slip.innerHTML = `
+      <div class="empty-state">
+        <b>Nenhuma proposta ainda</b>
+        Cole os dados ao lado para montar a ficha.
+      </div>
+    `;
+  });
+
+  // Gera automaticamente ao colar
+  raw.addEventListener('paste', function(){
+    setTimeout(gerar, 30);
+  });
+
+  // Gera automaticamente ao apertar Enter dentro do campo
+  raw.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      gerar();
+    }
+  });
+})();
+</script>
+
+</body>
+</html> html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
