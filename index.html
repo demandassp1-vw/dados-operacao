@@ -292,10 +292,25 @@
   }
   .parcela-line .label{
     font-family: 'Poppins', sans-serif;
-    font-size: 9px;
+    font-size: 17px;
+    font-weight: 600;
     color: var(--ink-soft);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+  }
+
+  .parcela-line .parcela-input{
+    width: 130px;
+    border: none;
+    border-bottom: 1px solid var(--hair);
+    background: transparent;
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    padding: 0 0 2px;
+  }
+  .parcela-line .parcela-input:focus{
+    outline: none;
+    border-bottom-color: var(--ink);
   }
 
   .parcela-line .field{
@@ -536,7 +551,8 @@
         <div class="parcela-line">
           <div class="parcela-main">
             <div class="value">${escapeHtml(parcelaQtd)}x</div>
-            <div class="label">de ${parcelaValor}</div>
+            <div class="label">de</div>
+            <input type="text" class="parcela-input" id="fParcelaValor" value="${escapeHtml(parcelaValor)}">
           </div>
           <div class="field">
             <label>Retorno</label>
