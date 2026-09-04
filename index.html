@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha de Proposta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:   #ECE7DA;
+    --card:    #FAF7EF;
+    --ink:     #201D18;
+    --ink-soft:#5B564A;
+    --hair:    #CBC3AE;
+    --ledger:  #1F6F4A;
+    --ledger-soft: #E4EEE7;
+    --rust:    #A84A2A;
+    --rust-soft: #F3E6DE;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(32,29,24,0.055) 1px, transparent 0);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family: 'Fraunces', serif;
+    min-height: 100vh;
+  }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  header.page-head{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 18px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  header.page-head h1{
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+    font-optical-sizing: auto;
+  }
+
+  header.page-head span{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+
+  .grid{
+    display: grid;
+    grid-template-columns: minmax(280px, 380px) 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  @media (max-width: 820px){
+    .grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Intake panel ---------- */
+
+  .intake{
+    background: var(--card);
+    border: 1px solid var(--hair);
+    padding: 22px;
+  }
+
+  .intake h2{
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  .intake p{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+  }
+
+  textarea{
+    width: 100%;
+    min-height: 320px;
+    resize: vertical;
+    background: #fff;
+    border: 1px solid var(--hair);
+    padding: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  textarea:focus{
+    outline: none;
+    border-color: var(--ink);
+  }
+
+  .intake-actions{
+    display:flex;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  button{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--card);
+    padding: 10px 16px;
+    cursor: pointer;
+  }
+
+  button.secondary{
+    background: transparent;
+    color: var(--ink);
+  }
+
+  button:active{ transform: translateY(1px); }
+
+  .status-line{
+    margin-top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    min-height: 14px;
+  }
+
+  /* ---------- Output slip ---------- */
+
+  .slip{
+    background: var(--card);
+    border: 1px solid var(--hair);
+    position: relative;
+  }
+
+  .slip-top{
+    padding: 24px 26px 20px;
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .slip-top .proposta-num{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .slip-top .proposta-num b{
+    display:block;
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 2px;
+  }
+
+  .stamp{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 6px 12px;
+    border: 2px solid var(--ledger);
+    color: var(--ledger);
+    transform: rotate(-4deg);
+    white-space: nowrap;
+  }
+
+  .stamp.pendente{ border-color: var(--rust); color: var(--rust); }
+
+  .meta-row{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    padding: 0 26px 20px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .meta-row .field label,
+  .field-block .field label{
+    display:block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+
+  .meta-row .field div{
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  .tear{
+    border-top: 2px dashed var(--hair);
+    position: relative;
+  }
+  .tear::before, .tear::after{
+    content:"";
+    position:absolute;
+    top:-9px;
+    width:18px; height:18px;
+    background: var(--paper);
+    border-radius: 50%;
+  }
+  .tear::before{ left:-9px; }
+  .tear::after{ right:-9px; }
+
+  .field-block{
+    padding: 24px 26px;
+  }
+
+  .name-row{
+    margin-bottom: 22px;
+  }
+  .name-row div{
+    font-family: 'Fraunces', serif;
+    font-size: 21px;
+    font-weight: 500;
+  }
+
+  .figures{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+
+  .figures .field .value{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .figures .field.credito .value{
+    color: var(--ledger);
+  }
+  .figures .field.credito{
+    background: var(--ledger-soft);
+    padding: 12px 14px;
+    margin: -12px -14px -12px 0;
+  }
+  .figures .field.entrada{
+    background: var(--rust-soft);
+    padding: 12px 14px;
+    margin: -12px -14px -12px 0;
+  }
+  .figures .field.entrada .value{ color: var(--rust); }
+
+  .parcela-line{
+    border-top: 1px solid var(--hair);
+    padding-top: 18px;
+    display:flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .parcela-line .value{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .parcela-line .label{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .extra-fields{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    border-top: 1px solid var(--hair);
+    padding-top: 18px;
+  }
+
+  .extra-fields .field label{
+    display:block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+
+  .extra-fields input{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--hair);
+    background: transparent;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    padding: 4px 2px;
+  }
+  .extra-fields input:focus{
+    outline: none;
+    border-bottom-color: var(--ink);
+  }
+
+  .slip-footer{
+    display:flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 26px 22px;
+  }
+
+  .empty-state{
+    padding: 60px 26px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .empty-state b{
+    display:block;
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    color: var(--ink);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="page-head">
+    <h1>Ficha de Proposta</h1>
+    <span>cole os dados &rarr; enter &rarr; a ficha se monta sozinha</span>
+  </header>
+
+  <div class="grid">
+
+    <div class="intake">
+      <h2>Colar dados</h2>
+      <p>Cole aqui o texto exportado do sistema e aperte Enter (ou clique em Gerar). Os campos são reconhecidos pelo nome, na ordem em que aparecerem.</p>
+      <textarea id="raw" placeholder="Proposta
+15487759
+
+Data Inclusão
+04/09/2026
+
+CPF
+328.178.618-92
+
+Nome
+OSVALDO SOARES DE SOUZA
+
+Status da Proposta
+Aprovada
+
+Valor Veículo
+R$ 112.900,00
+
+Valor Entrada
+R$ 26.900,00
+
+60x
+R$ 3.005,33"></textarea>
+      <div class="intake-actions">
+        <button id="gerar">Gerar ficha</button>
+        <button id="limpar" class="secondary">Limpar</button>
+      </div>
+      <div class="status-line" id="statusLine"></div>
+    </div>
+
+    <div class="slip" id="slip">
+      <div class="empty-state">
+        <b>Nenhuma proposta ainda</b>
+        Cole os dados ao lado para montar a ficha.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  const raw = document.getElementById('raw');
+  const slip = document.getElementById('slip');
+  const statusLine = document.getElementById('statusLine');
+  const gerarBtn = document.getElementById('gerar');
+  const limparBtn = document.getElementById('limpar');
+
+  const LABELS = [
+    { key: 'proposta',      re: /^p?roposta$/i },
+    { key: 'dataInclusao',  re: /^data\s*inclus[aã]o$/i },
+    { key: 'cpf',           re: /^cpf$/i },
+    { key: 'nome',          re: /^nome$/i },
+    { key: 'status',        re: /^status\s*da\s*proposta$/i },
+    { key: 'codigoPlano',   re: /^c[oó]digo\s*plano$/i },
+    { key: 'vctoPlano',     re: /^vcto\.?\s*do\s*plano$/i },
+    { key: 'valorVeiculo',  re: /^valor\s*ve[ií]culo$/i },
+    { key: 'valorEntrada',  re: /^valor\s*entrada$/i },
+  ];
+
+  function parse(text){
+    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+    const data = {};
+
+    for (let i = 0; i < lines.length; i++){
+      const line = lines[i];
+
+      const known = LABELS.find(l => l.re.test(line));
+      if (known && i + 1 < lines.length){
+        data[known.key] = lines[i + 1];
+        i++;
+        continue;
+      }
+
+      const parcelaMatch = line.match(/^(\d+)\s*x$/i);
+      if (parcelaMatch && i + 1 < lines.length){
+        data.parcelaQtd = parcelaMatch[1];
+        data.parcelaValor = lines[i + 1];
+        i++;
+        continue;
+      }
+    }
+    return data;
+  }
+
+  function parseCurrency(str){
+    if (!str) return NaN;
+    const cleaned = str.replace(/[^\d,.-]/g, '').replace(/\./g, '').replace(',', '.');
+    return parseFloat(cleaned);
+  }
+
+  function formatCurrency(num){
+    if (isNaN(num)) return '—';
+    return 'R$ ' + num.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function escapeHtml(str){
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function render(data){
+    const nome = data.nome || '—';
+    const proposta = data.proposta || '—';
+    const dataInclusao = data.dataInclusao || '—';
+    const cpf = data.cpf || '—';
+    const status = data.status || '—';
+
+    const valorVeiculoNum = parseCurrency(data.valorVeiculo);
+    const valorEntradaNum = parseCurrency(data.valorEntrada);
+    const credito = (!isNaN(valorVeiculoNum) && !isNaN(valorEntradaNum))
+      ? valorVeiculoNum - valorEntradaNum
+      : NaN;
+
+    const parcelaQtd = data.parcelaQtd || '—';
+    const parcelaValor = data.parcelaValor ? formatCurrency(parseCurrency(data.parcelaValor)) : '—';
+
+    const aprovada = /aprova/i.test(status);
+    const stampClass = aprovada ? '' : 'pendente';
+    const stampText = status.toUpperCase();
+
+    slip.innerHTML = `
+      <div class="slip-top">
+        <div class="proposta-num">
+          Proposta nº
+          <b>${escapeHtml(proposta)}</b>
+        </div>
+        <div class="stamp ${stampClass}">${escapeHtml(stampText)}</div>
+      </div>
+
+      <div class="meta-row">
+        <div class="field">
+          <label>Data inclusão</label>
+          <div>${escapeHtml(dataInclusao)}</div>
+        </div>
+        <div class="field">
+          <label>CPF</label>
+          <div>${escapeHtml(cpf)}</div>
+        </div>
+        <div class="field">
+          <label>Vencimento do plano</label>
+          <div>${escapeHtml(data.vctoPlano || '—')}</div>
+        </div>
+      </div>
+
+      <div class="tear"></div>
+
+      <div class="field-block">
+        <div class="name-row">
+          <label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);margin-bottom:4px;">Nome</label>
+          <div>${escapeHtml(nome)}</div>
+        </div>
+
+        <div class="figures">
+          <div class="field">
+            <label>Valor carro</label>
+            <div class="value">${formatCurrency(valorVeiculoNum)}</div>
+          </div>
+          <div class="field entrada">
+            <label>Entrada</label>
+            <div class="value">${formatCurrency(valorEntradaNum)}</div>
+          </div>
+          <div class="field credito">
+            <label>Crédito</label>
+            <div class="value">${formatCurrency(credito)}</div>
+          </div>
+        </div>
+
+        <div class="parcela-line">
+          <div class="value">${escapeHtml(parcelaQtd)}x</div>
+          <div class="label">de ${parcelaValor}</div>
+        </div>
+
+        <div class="extra-fields">
+          <div class="field">
+            <label>Retorno</label>
+            <input type="text" id="fRetorno" placeholder="05">
+          </div>
+          <div class="field">
+            <label>Vencimento</label>
+            <input type="text" id="fVencimento" placeholder="30 dias">
+          </div>
+        </div>
+      </div>
+
+      <div class="slip-footer">
+        <button class="secondary" id="copiar">Copiar resumo</button>
+      </div>
+    `;
+
+    document.getElementById('copiar').addEventListener('click', function(){
+      const retorno = document.getElementById('fRetorno').value || '—';
+      const vencimento = document.getElementById('fVencimento').value || '—';
+      const resumo =
+`Proposta ${proposta}
+Nome: ${nome}
+CPF: ${cpf}
+Status: ${status}
+
+Valor carro: ${formatCurrency(valorVeiculoNum)}
+Entrada: ${formatCurrency(valorEntradaNum)}
+Crédito: ${formatCurrency(credito)}
+
+${parcelaQtd}x de ${parcelaValor}
+Retorno: ${retorno}
+Vencimento: ${vencimento}`;
+
+      navigator.clipboard.writeText(resumo).then(function(){
+        statusLine.textContent = 'Resumo copiado.';
+        statusLine.style.color = 'var(--ledger)';
+        setTimeout(() => { statusLine.textContent = ''; }, 2200);
+      }).catch(function(){
+        statusLine.textContent = 'Não foi possível copiar automaticamente.';
+        statusLine.style.color = 'var(--rust)';
+      });
+    });
+  }
+
+  function gerar(){
+    const text = raw.value.trim();
+    if (!text){
+      statusLine.textContent = 'Cole os dados antes de gerar.';
+      statusLine.style.color = 'var(--rust)';
+      return;
+    }
+    const data = parse(text);
+    if (!data.nome && !data.proposta && !data.valorVeiculo){
+      statusLine.textContent = 'Não reconheci os campos. Confira se o texto colado segue o formato esperado.';
+      statusLine.style.color = 'var(--rust)';
+      return;
+    }
+    statusLine.textContent = '';
+    render(data);
+  }
+
+  gerarBtn.addEventListener('click', gerar);
+
+  limparBtn.addEventListener('click', function(){
+    raw.value = '';
+    statusLine.textContent = '';
+    slip.innerHTML = `
+      <div class="empty-state">
+        <b>Nenhuma proposta ainda</b>
+        Cole os dados ao lado para montar a ficha.
+      </div>
+    `;
+  });
+
+  // Gera automaticamente ao colar
+  raw.addEventListener('paste', function(){
+    setTimeout(gerar, 30);
+  });
+
+  // Gera automaticamente ao apertar Enter dentro do campo
+  raw.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      gerar();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
