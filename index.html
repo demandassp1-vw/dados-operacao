@@ -384,7 +384,7 @@
       <h2>Colar dados</h2>
       <textarea id="raw" placeholder="Cole aqui os dados..."></textarea>
       <div class="intake-actions">
-        <button id="gerar" hidden>Gerar ficha</button>
+        <button id="gerar">Gerar ficha</button>
         <button id="limpar" class="secondary">Limpar</button>
       </div>
       <div class="intake-actions">
@@ -688,6 +688,16 @@
   // Gera automaticamente ao colar
   raw.addEventListener('paste', function(){
     setTimeout(gerar, 30);
+  });
+
+  // Reforço: qualquer mudança no texto (colar pelo menu, arrastar, etc.)
+  // gera a ficha depois de uma pequena pausa
+  let autoTimer;
+  raw.addEventListener('input', function(){
+    clearTimeout(autoTimer);
+    autoTimer = setTimeout(function(){
+      if (raw.value.trim()) gerar();
+    }, 400);
   });
 
   // Gera automaticamente ao apertar Enter dentro do campo
