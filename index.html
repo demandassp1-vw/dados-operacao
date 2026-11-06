@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   :root{
     --paper:   #F2F3F5;
@@ -139,6 +140,12 @@
   }
 
   button:active{ transform: translateY(1px); }
+  button:disabled{ opacity: .4; cursor: not-allowed; }
+
+  button.copy{
+    background: var(--flag-green);
+    border-color: var(--flag-green);
+  }
 
   .status-line{
     margin-top: 10px;
@@ -380,6 +387,9 @@
         <button id="gerar">Gerar ficha</button>
         <button id="limpar" class="secondary">Limpar</button>
       </div>
+      <div class="intake-actions">
+        <button id="copiar" class="copy" disabled>📋 Copiar ficha (imagem)</button>
+      </div>
       <div class="status-line" id="statusLine"></div>
     </div>
 
@@ -400,6 +410,7 @@
   const statusLine = document.getElementById('statusLine');
   const gerarBtn = document.getElementById('gerar');
   const limparBtn = document.getElementById('limpar');
+  const copiarBtn = document.getElementById('copiar');
 
   const LABELS = [
     { key: 'proposta',      re: /^p?roposta$/i },
@@ -582,13 +593,90 @@
     }
     statusLine.textContent = '';
     render(data);
+    copiarBtn.disabled = false;
   }
+
+  // ---------- Copiar a ficha como imagem ----------
+
+  function capturar(){
+    return html2canvas(slip, {
+      scale: 2,
+      backgroundColor: '#ffffff',
+      onclone: function(doc){
+        // Troca os campos editáveis por texto simples, para sair nítido na imagem
+        doc.querySelectorAll('#slip input').forEach(function(orig){
+          const real = document.getElementById(orig.id);
+          const val = (real && real.value) || orig.placeholder || '';
+          const cs = getComputedStyle(real || orig);
+          const span = doc.createElement('span');
+          span.textContent = val;
+          span.style.cssText =
+            'display:inline-block;font-family:' + cs.fontFamily +
+            ';font-size:' + cs.fontSize + ';font-weight:' + cs.fontWeight +
+            ';color:' + ((real && real.value) ? cs.color : 'var(--ink-soft)') +
+            ';min-width:' + (real || orig).offsetWidth + 'px' +
+            ';border-bottom:1px solid var(--hair);padding:' + cs.padding + ';';
+          orig.replaceWith(span);
+        });
+      }
+    });
+  }
+
+  function canvasToBlob(canvas){
+    return new Promise(function(resolve, reject){
+      canvas.toBlob(function(b){ b ? resolve(b) : reject(new Error('blob')); }, 'image/png');
+    });
+  }
+
+  function baixar(blob){
+    const a = document.createElement('a');
+    const prop = (slip.querySelector('.proposta-num b') || {}).textContent || 'ficha';
+    a.href = URL.createObjectURL(blob);
+    a.download = 'proposta-' + prop.trim() + '.png';
+    a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+  }
+
+  function aviso(msg, cor){
+    statusLine.textContent = msg;
+    statusLine.style.color = cor;
+  }
+
+  async function copiar(){
+    if (typeof html2canvas === 'undefined'){
+      aviso('Não consegui carregar o gerador de imagem (sem internet?).', 'var(--rust)');
+      return;
+    }
+    copiarBtn.disabled = true;
+    aviso('Gerando imagem…', 'var(--ink-soft)');
+
+    const blobPromise = capturar().then(canvasToBlob);
+
+    try{
+      if (!navigator.clipboard || typeof ClipboardItem === 'undefined') throw new Error('sem clipboard');
+      // Passa a Promise direto: funciona no Chrome, Edge e Safari
+      await navigator.clipboard.write([ new ClipboardItem({ 'image/png': blobPromise }) ]);
+      aviso('✔ Ficha copiada! É só colar (Ctrl+V) no WhatsApp, e-mail etc.', 'var(--ledger)');
+    }catch(err){
+      try{
+        baixar(await blobPromise);
+        aviso('Seu navegador não deixou copiar, então baixei a imagem (PNG).', 'var(--rust)');
+      }catch(e2){
+        aviso('Não foi possível gerar a imagem.', 'var(--rust)');
+      }
+    }finally{
+      copiarBtn.disabled = false;
+    }
+  }
+
+  copiarBtn.addEventListener('click', copiar);
 
   gerarBtn.addEventListener('click', gerar);
 
   limparBtn.addEventListener('click', function(){
     raw.value = '';
     statusLine.textContent = '';
+    copiarBtn.disabled = true;
     slip.innerHTML = `
       <div class="empty-state">
         <b>Nenhuma proposta ainda</b>
